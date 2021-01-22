@@ -13,6 +13,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.1",
+    "puppeteer": "^5.5.0",
+    "puppeteer-core": "^5.5.0"
   }
 }
