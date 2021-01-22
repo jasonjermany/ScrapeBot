@@ -1,77 +1,89 @@
 const puppeteer = require('puppeteer');
 const MAX = 6;
 //const scrape = require('../scraper');
-const guitarIDs = require('../URL_IDs/guitarID');
-const guitarURLs = require('../URL_IDs/guitarURL');
-const xPaths = require('../URL_IDs/xPath');
+//const guitarIDs = require('../URL_IDs/guitarID');
+// const guitarURLs = require('../URL_IDs/guitarURL');
+// const xPaths = require('../URL_IDs/xPath');
 let url = '';
 let orig1 = '';
 let sale1 = '';
 let orig2 = '';
 let sale2 = '';
 let input = "";
+let hold = 1;
 module.exports = {
 	name: 'scrape',
 	description: 'scrape website',
 	async execute(message,args) { 
-		console.log("test1");
+		//console.log("test1");
 		if(!args[0]){
-			url = (guitarURLs.allBrand);
-			console.log(guitarURLs.allBrand);
-			orig1 = xPaths.origAll1;
-			orig2 = xPaths.origAll2;
-			sale1 = xPaths.saleAll1;
-			sale2 = xPaths.saleAll2;
-			console.log("test2");
+			url = 'https://www.musiciansfriend.com/hot-deals?N=100202+100802+500002';
+			orig1 = `//*[@id="plpResultsGrid"]/div/div[`;
+			orig2 = `]/div[2]/div[5]/div[2]/span`;
+			sale1 = `//*[@id="plpResultsGrid"]/div/div[`;
+			sale2 = `]/div[2]/div[5]/div[1]/span[3]`;
+			//console.log("test2");
 		}
 		else{
-			console.log("test3");
+			//console.log("test3");
 			switch(args[0]){
 				case "fender":
-					input = guitarIDs.fender;
+					input = "202612";
 				break;
 				case "gibson":
-					input = guitarIDs.gibson;
+					input = "202616";
 				break;
 				case "ibanez":
-					input = guitarIDs.ibanez;
+					input = "202617";
 				break;
 				case "schecter":
-					input = guitarIDs.schecter;
+					input = "201873";
 				break;
 				case "jackson":
-					input = guitarIDs.jackson;
+					input = "201045";
 				break;
 				case "prs":
-					input = guitarIDs.prs;
+					input = "201539";
 				break;
 				case "gretsch":
-					input = guitarIDs.gretsch;
+					input = "200886";
 				break;
 				case "legator":
-					input = guitarIDs.legator;
+					input = "3013029";
 				break;
 				default:
 					console.log("invalid input");
 					message.channel.send("invalid input");
-					input = 0;
+					hold = 0;
 				break;
 			}
-			orig1 = xPaths.origSpec1;
-			sale1 = xPaths.saleSpec1;
-			orig2 = xPaths.origSpec2;
-			sale2 = xPaths.saleSpec2;
-			url = (guitarURLs.specificBrand1 + input + guitarURLs.specificBrand2 + input + guitarURLs.specificBrand3);
+			orig1 = `//*[@id="plpResultsGrid"]/div/div[`;
+			sale1 = `//*[@id="plpResultsGrid"]/div/div[`;
+			orig2 = `]/div[2]/div[4]/div[2]/span`;
+			sale2 = `]/div[2]/div[4]/div[1]/span[3]`;
+			url = (`https://www.musiciansfriend.com/hot-deals?N=` + input + `+100202+100202+` + input + `+100802+500002`);
 		} 
-		if(input !== 0){
+		if(hold !== 0){
 			const browser = await puppeteer.launch();
 			const page = await browser.newPage();
-			
+
+			await page.setRequestInterception(true);
+			page.on('request', (req) => {
+				if(req.resourceType() == 'stylesheet' || req.resourceType() == 'font' || req.resourceType() == 'image'){
+					req.abort();
+				}
+				else {
+					req.continue();
+				}
+			});
+
 			await page.goto(url);
-			console.log(url);
+
+			//console.log(url);
 			for(let i = 1; i < MAX; i++){
 
 				const [orig] = await page.$x(orig1 + i + orig2);
+				
 				const origTxt = await orig.getProperty('textContent');
 				const origPrice = await origTxt.jsonValue();
 
@@ -81,10 +93,9 @@ module.exports = {
 				let n1 = origPrice.replace(/[^0-9.-]+/g,"");
 				let n2 = salePrice.replace(/[^0-9.-]+/g,"");
 				let dif = parseFloat(n1) - parseFloat(n2);
-				console.log('Original price: ' + origPrice + ' Sale price: ' + salePrice + ' Price difference: ' + Math.round((dif + Number.EPSILON) * 100) / 100 + '\n');
-				message.channel.send('Original price: ' + origPrice + ' Sale price: ' + salePrice + ' Price difference: ' + Math.round((dif + Number.EPSILON) * 100) / 100 + '\n');
+				//console.log('Original price: ' + origPrice + ' Sale price: ' + salePrice + ' Price difference: ' + Math.round((dif + Number.EPSILON) * 100) / 100 + '\n');
+				message.channel.send(' ' + 'Original price:' + origPrice + ' Sale price: ' + salePrice + ' Price difference: $' + Math.round((dif + Number.EPSILON) * 100) / 100);
 			}
-			
 			await browser.close();
 		}else{
 			console.log("terminated");
