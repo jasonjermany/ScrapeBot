@@ -1,4 +1,3 @@
-let inc = 1;
 
 let xPaths = 
             {

@@ -1,8 +1,8 @@
+
 const puppeteer = require('puppeteer');
-// const sc = require('./commands/scrape');
 // const guitarIDs = require('./URL_IDs/guitarID');
 // const guitarURLs = require('./URL_IDs/guitarURL');
-const xPaths = require('./URL_IDs/xPath');
+//const xPaths = require('./URL_IDs/xPath');
 const MAX = 6;
 
 async function scrape(url, orig1,orig2,sale1,sale2) {  
@@ -24,6 +24,7 @@ async function scrape(url, orig1,orig2,sale1,sale2) {
         let n2 = salePrice.replace(/[^0-9.-]+/g,"");
         let dif = parseFloat(n1) - parseFloat(n2);
         console.log('Original price: ' + origPrice + ' Sale price: ' + salePrice + ' Price difference: ' + Math.round((dif + Number.EPSILON) * 100) / 100 + '\n');
+        message.channel.send('Original price: ' + origPrice + ' Sale price: ' + salePrice + ' Price difference: ' + Math.round((dif + Number.EPSILON) * 100) / 100 + '\n');
     }
     
     await browser.close();
