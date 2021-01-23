@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require('mongoose-type-url');
 const Schema = mongoose.Schema;
 
 const guitarSchema = new Schema({
@@ -7,6 +8,14 @@ const guitarSchema = new Schema({
     require: false
   },
   name_identifier: {
+    type: String,
+    require: false
+  },
+  link: {
+    type: String,
+    require: false
+  },
+  beef: {
     type: String,
     require: false
   },

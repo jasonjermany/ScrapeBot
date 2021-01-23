@@ -27,13 +27,18 @@ async function scraper(){
 	});
 
 	await page.goto(url);
-
+	
+	
+	//console.log(guitar_link);
 	for(let i = 1; i < MAX; i++){
 		const [name] = await page.$x('//*[@id="plpResultsGrid"]/div/div[' + i + ']/div[2]/div[3]/a');
 		const nameTxt = await name.getProperty('textContent');
 		const guitarName = await nameTxt.jsonValue();
-		let GuitarName = guitarName.substring(1);
+		let GuitarName = guitarName.substring(1); 
 
+		let guitar_link = await page.$$eval('#plpResultsGrid > div > div:nth-child(' + i + ') > div.product-card-content > div.product-card-title > a', as => as.map(a=>a.href));
+		let guitar_link1 = toString(guitar_link);
+		//console.log(guitar_link[0]);
 		const [orig] = await page.$x(orig1 + i + orig2);
 		const origTxt = await orig.getProperty('textContent');
 		const origPrice = await origTxt.jsonValue();
@@ -53,14 +58,13 @@ async function scraper(){
 
 		const guitar = new Guitar({
 			guitar_name: GuitarName,
+			link: guitar_link[0],
 			name_identifier: ident1,
 			sale_price: salePrice,
 			original_price: OrigPrice,
 			price_difference: difr
 		});
 		await guitar.save();
-
-		//console.log(data);
 	}
 	await browser.close();
 }
