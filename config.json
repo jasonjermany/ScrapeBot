@@ -1,4 +1,5 @@
 {
     "prefix": "$",
-    "token": "Nzg0OTk4ODQ4OTc5NTMzODU1.X8xdJg.2g73k4M61obed0_IurW3jsqW9yE"
+    "token": "Nzg0OTk4ODQ4OTc5NTMzODU1.X8xdJg.2g73k4M61obed0_IurW3jsqW9yE",
+    "mongpass": "mongodb+srv://jasonj19:46563626@cluster0.onjvf.mongodb.net/database1?retryWrites=true&w=majority"
 }
