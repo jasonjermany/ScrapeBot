@@ -51,7 +51,7 @@ module.exports = {
             
         const collector = message.channel.createMessageCollector(
             msg => msg.author.id == message.author.id,
-            {time: 30000}
+            {time: 60000}
           );
           for await (const msg of collector) {
             if (msg.content.toLowerCase() === "yes") {
