@@ -1,8 +1,13 @@
+const { BSONType } = require("mongodb");
 const mongoose = require("mongoose");
 require('mongoose-type-url');
 const Schema = mongoose.Schema;
 
 const guitarSchema = new Schema({
+  count: {
+    type: Number,
+    require: true
+  },
   guitar_name: {
     type: String,
     require: false
@@ -28,6 +33,11 @@ const guitarSchema = new Schema({
     require: false
   },
   price_difference: {
+    type: String,
+    require: false
+  }
+  ,
+  guitar_image: {
     type: String,
     require: false
   }
