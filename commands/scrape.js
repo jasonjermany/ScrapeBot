@@ -11,8 +11,6 @@ async function scraper(){
 	await page.goto(url);
 	try{
 		for(let i = 1; i < MAX; i++){
-
-			
 			let totnum = await page.$eval('#plpCounts > div',as => as.innerText);
 			let totnum1 = parseInt(totnum.replace(/[^0-9.-]+/g,""));
 
