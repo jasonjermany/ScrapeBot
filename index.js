@@ -9,7 +9,7 @@ const scraper = require('./commands/scrape.js');
 
 
 
-const dbURI = 'mongodb+srv://jasonj19:46563626@cluster0.onjvf.mongodb.net/database1?retryWrites=true&w=majority';
+
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
     .then((result) => console.log("connected to db."))
     .catch((err) => console.log(err));
