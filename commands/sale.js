@@ -15,16 +15,12 @@ module.exports = {
         let low = args[0].toLowerCase();
         const cName = await Guitar.find({ "guitar_name": { "$regex": `${low}`, "$options": "i" } }).exec();
         const num = cName.length;
-        console.log(num);
-        let div = num/5;
-        let pages = [];
-        let page = 1;
+
         let count = 0;
         let inc1 = 0;
         let inc2 = 5;
-        let ls = 1;
 
-        if(cName[0] === ''){
+        if(cName.length === 0){
             message.channel.send("no results!");
         }
         

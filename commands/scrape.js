@@ -69,18 +69,18 @@ async function scraper(){
 			count++;
 			if(i === 30){
 				i = 0;
-				if(page.url() === 'https://www.musiciansfriend.com/hot-deals?N=100802+500002#N=100202+100802+500002&pageName=deal-center&Nao=90&recsPerPage=30&Ns=bS'){
-					//console.log('beef');
-					await page.goto('about:blank');
-					page.waitForNavigation(1000);
-					await page.goto('https://www.musiciansfriend.com/hot-deals?N=100802+500002#N=100202+100802+500002+100202+100802+500002&pageName=deal-center&Nao=180&recsPerPage=30&Ns=bS');
-					console.log(page.url());
-					await page.waitForSelector('#plpResultsGrid > div > div:nth-child(1) > div.product-card-content > div.product-card-price > div:nth-child(2) > span', {
-						visible: true,
-					});
-					s += 90;
-					continue;
-				}
+				// if(page.url() === 'https://www.musiciansfriend.com/hot-deals?N=100802+500002#N=100202+100802+500002&pageName=deal-center&Nao=90&recsPerPage=30&Ns=bS'){
+				// 	//console.log('beef');
+				// 	await page.goto('about:blank');
+				// 	page.waitForNavigation(1000);
+				// 	await page.goto('https://www.musiciansfriend.com/hot-deals?N=100802+500002#N=100202+100802+500002+100202+100802+500002&pageName=deal-center&Nao=180&recsPerPage=30&Ns=bS');
+				// 	console.log(page.url());
+				// 	await page.waitForSelector('#plpResultsGrid > div > div:nth-child(1) > div.product-card-content > div.product-card-price > div:nth-child(2) > span', {
+				// 		visible: true,
+				// 	});
+				// 	s += 90;
+				// 	continue;
+				// }
 				
 				await page.goto('about:blank');
 				await page.goto('https://www.musiciansfriend.com/hot-deals?N=100802+500002#N=100202+100802+500002&pageName=deal-center&Nao='+ (s+30) +'&recsPerPage=30&Ns=bS', {
@@ -91,27 +91,22 @@ async function scraper(){
 					visible: true,
 				});
 				s += 30;    
-				// await Promise.all([
-				// 	page.waitForNavigation(3000),
-				// 	page.click('#plpFooter > div > div.plp-utils_pagination > button.plp-utils_pagination-btn.-next.js-pagination-next'),
-				// ]);
-				//await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
-				
 			}
 		}	
 	}catch (error) {
 		console.error(error);
+		console.log("done")
 	  }
 
 	await browser.close();
 }
 module.exports = scraper;
 
-function sleep(milliseconds) {
-	var start = new Date().getTime();
-	for (var i = 0; i < 1e7; i++) {
-		if ((new Date().getTime() - start) > milliseconds){
-			break;
-		}
-	}
-  }
+// function sleep(milliseconds) {
+// 	var start = new Date().getTime();
+// 	for (var i = 0; i < 1e7; i++) {
+// 		if ((new Date().getTime() - start) > milliseconds){
+// 			break;
+// 		}
+// 	}
+//   }
