@@ -1,5 +1,6 @@
   
 {
     "prefix": "$",
-    "token": "Nzg0OTk4ODQ4OTc5NTMzODU1.X8xdJg.Eu9byPJIIJk3H4Tw-nUOIST6w-A"
+    "token": "Nzg0OTk4ODQ4OTc5NTMzODU1.X8xdJg.maJ-gOibbPvcKUAdzIyTAkiTWI4",
+    "mongoID": "mongodb+srv://jasonj19:46563626@cluster0.onjvf.mongodb.net/database1?retryWrites=true&w=majority"
 }

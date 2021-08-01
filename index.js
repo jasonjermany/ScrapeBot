@@ -1,20 +1,14 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const {prefix, token} = require('./config.json');
-//const mongo = require('mongodb');
+const {prefix, token, mongoID} = require('./config.json');
 const mongoose = require('mongoose');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
-const scraper = require('./commands/scrape.js');
 
-
-
-const dbURI = 'mongodb+srv://jasonj19:46563626@cluster0.onjvf.mongodb.net/database1?retryWrites=true&w=majority';
+const dbURI = mongoID;
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
     .then((result) => console.log("connected to db."))
     .catch((err) => console.log(err));
-
-
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
